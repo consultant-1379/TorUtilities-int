@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>TorUtilities-int</artifactId>
+    <groupId>com.ericsson.dms.torutility</groupId>
+    <version>1.1.3-SNAPSHOT</version>
+  </parent>
+  <artifactId>ERICtorutilitiesinternal_CXP9030579</artifactId>
+  <packaging>${rpm.packaging}</packaging>
+  <name>[${project.parent.artifactId}] CXP9030579</name>
+  <properties>
+    <publish_artifact>true</publish_artifact>
+    <com.ericsson.oss.rpm.architecture>noarch</com.ericsson.oss.rpm.architecture>
+    <!-- Install path = /${rpm-root}/${comp-name}/${install-path} -->
+    <rpm-root>opt</rpm-root>
+    <comp-name>ericsson</comp-name>
+    <install-path>internaltorutilities</install-path>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <!--
+       <execution>
+        <configuration>
+         <executable>pylint</executable>
+         <workingDirectory>tools</workingDirectory>
+         <arguments>
+           <argument>-E</argument>
+           <argument>./*</argument>
+         </arguments>
+        </configuration>
+        <id>pylint-tools-test</id>
+        <phase>test</phase>
+        <goals>
+         <goal>exec</goal>
+        </goals>
+       </execution>
+       <execution>
+        <configuration>
+         <executable>pylint</executable>
+         <workingDirectory>utils</workingDirectory>
+         <arguments>
+           <argument>-E</argument>
+           <argument>./*</argument>
+         </arguments>
+        </configuration>
+        <id>pylint-utils-test</id>
+        <phase>test</phase>
+        <goals>
+         <goal>exec</goal>
+        </goals>
+       </execution>
+       -->
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>rpm-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <skip>true</skip>
+          <inherited>true</inherited>
+          <copyright>2013 Ericsson AB All rights reserved</copyright>
+          <description>${ericsson.rstate}</description>
+          <group>ERI-NMS</group>
+          <requires>
+            <require>python &gt;= 2.6</require>
+            <require>python-paramiko &gt;= 1.7</require>
+          </requires>
+          <vendor>Ericsson AB</vendor>
+          <url>www.ericsson.com</url>
+          <mappings>
+            <mapping>
+              <directory>/${rpm-root}/${comp-name}</directory>
+              <filemode>775</filemode>
+              <username>root</username>
+              <groupname>root</groupname>
+            </mapping>
+            <mapping>
+              <directory>
+              /${rpm-root}/${comp-name}/${install-path}</directory>
+              <filemode>775</filemode>
+              <username>root</username>
+              <groupname>root</groupname>
+              <configuration>false</configuration>
+              <directoryIncluded>true</directoryIncluded>
+              <recurseDirectories>true</recurseDirectories>
+              <dependency />
+              <sources>
+                <source>
+                  <location>.</location>
+                  <excludes>
+                    <exclude>**/*.pyc</exclude>
+                    <exclude>**/*.gitignore</exclude>
+                    <exclude>**/README.rpm</exclude>
+                    <exclude>**/pom.xml</exclude>
+                    <exclude>target/**</exclude>
+                    <exclude>tests/**</exclude>
+                    <exclude>persistence/**</exclude>
+                  </excludes>
+                </source>
+              </sources>
+            </mapping>
+          </mappings>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
